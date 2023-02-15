@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+tutorial.access_tutorial_checkout,Checkout User,model_tutorial_library_checkout,tutorial.library_group_user,1,1,1,1
+tutorial.access_tutorial_checkout_line,Checkout Line User,model_tutorial_library_checkout_line,tutorial.library_group_user,1,1,1,1
+tutorial.access_tutorial_checkout_stage_user,Checkout Stage User,model_tutorial_library_checkout_stage,tutorial.library_group_user,1,0,0,0
+tutorial.access_tutorial_checkout_stage_manager,Checkout Stage Manager,model_tutorial_library_checkout_stage,tutorial.library_group_manager,1,1,1,1
+tutorial.access_checkout_massmessage_user,Checkout Mass Message User,model_tutorial_library_checkout_massmessage,tutorial.library_group_user,1,1,1,1

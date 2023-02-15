@@ -1,0 +1,19 @@
+<odoo>
+  <!-- actions opening views on models -->
+
+  <record model="ir.actions.act_window" id="action_tutorial_checkout">
+    <field name="name">Checkouts</field>
+    <field name="res_model">tutorial.library.checkout</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <record model="ir.actions.act_window" id="action_tutorial_library_stage">
+    <field name="name">Stages</field>
+    <field name="res_model">tutorial.library.checkout.stage</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <menuitem id="checkout_menu" parent="tutorial.tutorial_base_menu" action="action_tutorial_checkout" />
+  <menuitem id="stage_menu" parent="tutorial.tutorial_menu_library_configuration" action="action_tutorial_library_stage" />
+
+</odoo>
