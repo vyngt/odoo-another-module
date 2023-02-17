@@ -6,7 +6,9 @@ class LibraryCheckout(models.Model):
     _description = "Checkout Request"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
+    name = fields.Char(string="Title")
     member_id = fields.Many2one("res.users", required=True)
+    member_image = fields.Image(related="member_id.image_128")
     user_id = fields.Many2one(
         "tutorial.library.member", "Librarian", default=lambda s: s.env.user
     )
@@ -21,10 +23,24 @@ class LibraryCheckout(models.Model):
         "tutorial.library.checkout.line", "checkout_id", string="Borrowed Books"
     )
 
+    count_checkouts = fields.Integer(compute="_compute_count_checkouts")
+
+    def _compute_count_checkouts(self):
+        members = self.mapped("member_id")
+        domain = [
+            ("member_id", "in", members.ids),  # type: ignore
+            ("state", "not in", ["done", "cancel"]),
+        ]
+        raw = self.read_group(domain, ["id:count"], ["member_id"])
+        data = {x["member_id"][0]: x["member_id_count"] for x in raw}
+
+        for checkout in self:
+            checkout.count_checkouts = data.get(checkout.member_id.id, 0)  # type: ignore
+
     @api.model
     def _default_stage_id(self):
         Stage = self.env["tutorial.library.checkout.stage"]
-        stage = Stage.search([("name", "=", "new")], limit=1)
+        stage = Stage.search([("state", "=", "new")], limit=1)
         return stage
 
     @api.model
@@ -81,3 +97,10 @@ class LibraryCheckout(models.Model):
                     "message": "la la la lala",
                 }
             }
+
+    def button_done(self):
+        Stage = self.env["tutorial.library.checkout.state"]
+        done_stage = Stage.search([("state", "=", "done")], limit=1)
+        for checkout in self:
+            checkout.stage_id = done_stage
+        return True
