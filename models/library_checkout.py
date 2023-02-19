@@ -24,6 +24,12 @@ class LibraryCheckout(models.Model):
     )
 
     count_checkouts = fields.Integer(compute="_compute_count_checkouts")
+    num_books = fields.Integer(compute="_compute_num_books", store=True)
+
+    @api.depends("line_ids")
+    def _compute_num_books(self):
+        for checkout in self:
+            checkout.num_books = len(checkout.line_ids)
 
     def _compute_count_checkouts(self):
         members = self.mapped("member_id")
