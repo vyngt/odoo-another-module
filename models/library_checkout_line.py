@@ -7,5 +7,6 @@ class CheckoutLine(models.Model):
 
     checkout_id = fields.Many2one("tutorial.library.checkout", required=True)
     book_id = fields.Many2one("tutorial.library.book", required=True)
+    book_cover = fields.Binary(related="book_id.image")
 
     note = fields.Char("Notes")

@@ -69,6 +69,9 @@ class LibraryCheckout(models.Model):
         "Kanban State",
         default="normal",
     )
+    priority = fields.Selection(
+        [("0", "High"), ("1", "Very High"), ("2", "Critical")], default="0"
+    )
     color = fields.Integer()
     checkout_date = fields.Date(readonly=True)
     close_date = fields.Date(readonly=True)
