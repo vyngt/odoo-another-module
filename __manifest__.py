@@ -17,4 +17,10 @@
         "views/checkout_kanban_view.xml",
         "data/stage.xml",
     ],
+    "assets": {
+        "web.assets_backend": {
+            "tutorial_checkout/static/src/css/checkout.css",
+            "tutorial_checkout/static/src/js/checkout.js",
+        }
+    },
 }

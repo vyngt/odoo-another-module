@@ -96,4 +96,15 @@
             </kanban>
         </field>
     </record>
+
+    <record id="res_partner_kanban_inherit" model="ir.ui.view">
+        <field name="name">Contact Kanban modification</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.res_partner_kanban_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//t[@t-name='kanban-box']//field[@name='display_name']" position="before">
+                <span>Name: </span>
+            </xpath>
+        </field>
+    </record>
 </odoo>
