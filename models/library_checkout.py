@@ -60,7 +60,16 @@ class LibraryCheckout(models.Model):
         group_expand="_group_expand_stage_id",
     )
     state = fields.Selection(related="stage_id.state")
-
+    kanban_state = fields.Selection(
+        [
+            ("normal", "In Process"),
+            ("blocked", "Blocked"),
+            ("done", "Ready for next stage"),
+        ],
+        "Kanban State",
+        default="normal",
+    )
+    color = fields.Integer()
     checkout_date = fields.Date(readonly=True)
     close_date = fields.Date(readonly=True)
 
@@ -73,8 +82,11 @@ class LibraryCheckout(models.Model):
         return new_record
 
     def write(self, vals):
-        """Example code -> avoid infinite loop"""
+        # Reset kanban state
+        if "stage_id" in vals and "kanban_state" not in vals:
+            vals["kanban_state"] = "normal"
 
+        # # # Example code -> avoid infinite loop
         old_state = self.stage_id.state  # type: ignore
         super().write(vals)
         new_state = self.stage_id.state  # type: ignore
@@ -105,7 +117,7 @@ class LibraryCheckout(models.Model):
             }
 
     def button_done(self):
-        Stage = self.env["tutorial.library.checkout.state"]
+        Stage = self.env["tutorial.library.checkout.stage"]
         done_stage = Stage.search([("state", "=", "done")], limit=1)
         for checkout in self:
             checkout.stage_id = done_stage

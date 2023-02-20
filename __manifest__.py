@@ -14,6 +14,7 @@
         "wizard/checkout_mass_message_wizard_view.xml",
         "views/menu.xml",
         "views/checkout_view.xml",
+        "views/checkout_kanban_view.xml",
         "data/stage.xml",
     ],
 }
