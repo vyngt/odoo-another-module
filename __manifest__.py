@@ -5,7 +5,7 @@
         Members can borrow books
     """,
     "author": "vyngt",
-    "website": "https://github.com/vyngt",
+    "website": "https://github.com/vyngt/odoo-another-module",
     "category": "Services/Library",
     "version": "16.0.0.1",
     "depends": ["tutorial_member", "mail"],
